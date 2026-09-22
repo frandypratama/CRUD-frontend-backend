@@ -1,11 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: import.meta.env.VITE_API_URL || "/api",
 });
-
-// GET SEMUA PRODUK
-// SEARCH + KATEGORI
 
 export const getProducts = async (
   search = "",
@@ -21,88 +18,49 @@ export const getProducts = async (
   return response.data;
 };
 
-// GET KATEGORI
-
 export const getCategories = async () => {
   const response = await api.get("/categories");
 
   return response.data;
 };
 
-// GET PRODUK BERDASARKAN ID
-
 export const getProductById = async (id) => {
-  const response = await api.get(
-    `/products/${id}`
-  );
+  const response = await api.get(`/products/${id}`);
 
   return response.data;
 };
-
-
-// CREATE PRODUK
-
 
 export const createProduct = async (data) => {
-  const response = await api.post(
-    "/products",
-    data
-  );
+  const response = await api.post("/products", data);
 
   return response.data;
 };
 
-// UPDATE PRODUK
-
-export const updateProduct = async (
-  id,
-  data
-) => {
-  const response = await api.put(
-    `/products/${id}`,
-    data
-  );
+export const updateProduct = async (id, data) => {
+  const response = await api.put(`/products/${id}`, data);
 
   return response.data;
 };
-
-// DELETE PRODUK
 
 export const deleteProduct = async (id) => {
-  const response = await api.delete(
-    `/products/${id}`
-  );
+  const response = await api.delete(`/products/${id}`);
 
   return response.data;
 };
 
-// TAMBAH STOK
-
-export const addStock = async (
-  id,
-  jumlah
-) => {
+export const addStock = async (id, jumlah) => {
   const response = await api.patch(
     `/products/${id}/tambah-stok`,
-    {
-      jumlah,
-    }
+    { jumlah }
   );
 
   return response.data;
 };
 
-// KURANGI STOK
-
-export const reduceStock = async (
-  id,
-  jumlah
-) => {
+export const reduceStock = async (id, jumlah) => {
   const response = await api.patch(
     `/products/${id}/kurangi-stok`,
-    {
-      jumlah,
-    }
+    { jumlah }
   );
 
   return response.data;
