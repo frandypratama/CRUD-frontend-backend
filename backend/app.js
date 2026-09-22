@@ -14,9 +14,7 @@ app.use(express.json());
 
 app.use(productRoutes);
 
-const PORT = process.env.PORT || 5000;
-
-const startServer = async () => {
+const connectDatabase = async () => {
   try {
     await sequelize.authenticate();
 
@@ -25,15 +23,11 @@ const startServer = async () => {
     await sequelize.sync();
 
     console.log("Database berhasil disinkronkan");
-
-    app.listen(PORT, () => {
-      console.log(
-        `Server berjalan di http://localhost:${PORT}`
-      );
-    });
   } catch (error) {
-    console.error(error);
+    console.error("Database gagal terhubung:", error);
   }
 };
 
-startServer();
+connectDatabase();
+
+export default app;
